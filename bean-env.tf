@@ -1,15 +1,15 @@
 resource "aws_elastic_beanstalk_environment" "vprofile-bean-prod" {
-  application = aws_elastic_beanstalk_application.vprofile-prod.name
-  name        = "vprofile-bean-prod"
+  application         = aws_elastic_beanstalk_application.vprofile-prod.name
+  name                = "vprofile-bean-prod"
   solution_stack_name = "64bit Amazon Linux 2 v4.2.9 running Tomcat 8.5 Corretto 11"
-  cname_prefix = "vprofile-bean-prod-domain"
+  cname_prefix        = "vprofile-bean-prod-domain"
   # We want this to be created in the vpc we created
   setting {
     name      = "VPCId"
     namespace = "aws:ec2:vpc"
     value     = module.vpc.vpc_id
   }
-# below setting is to create a elastic beanstalk role
+  # below setting is to create a elastic beanstalk role
   setting {
     name      = "IamInstanceProfile"
     namespace = "aws:autoscaling:launchconfiguration"
@@ -25,13 +25,13 @@ resource "aws_elastic_beanstalk_environment" "vprofile-bean-prod" {
   setting {
     name      = "Subnets"
     namespace = "aws:ec2:vpc"
-    value     = join(",",[module.vpc.private_subnets[0],module.vpc.private_subnets[1],module.vpc.private_subnets[2]])
+    value     = join(",", [module.vpc.private_subnets[0], module.vpc.private_subnets[1], module.vpc.private_subnets[2]])
   }
 
   setting {
     name      = "ELBSubnets"
     namespace = "aws:ec2:vpc"
-    value     = join(",",[module.vpc.private_subnets[0],module.vpc.private_subnets[1],module.vpc.private_subnets[2]])
+    value     = join(",", [module.vpc.private_subnets[0], module.vpc.private_subnets[1], module.vpc.private_subnets[2]])
   }
 
   setting {
@@ -142,7 +142,7 @@ resource "aws_elastic_beanstalk_environment" "vprofile-bean-prod" {
     value     = aws_security_group.vprofile-bean-elb-sg.id
   }
 
-  depends_on = [aws_security_group.vprofile-bean-elb-sg,aws_security_group.vprofile-prod-sg]
+  depends_on = [aws_security_group.vprofile-bean-elb-sg, aws_security_group.vprofile-prod-sg]
 }
 
 
