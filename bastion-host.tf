@@ -16,10 +16,14 @@ resource "aws_instance" "vprofile-bastion" {
     destination = "/tmp/vprofiledbdeploy.sh"
   }
 
+  provisioner "file" {
+    source = "/tmp/vprofiledbdeploy.sh"
+    dest = "/opt/vprofiledbdeploy.sh"
+  }
   provisioner "remote-exec" {
     inline = [
-      "chmod 777 /tmp/vprofiledbdeploy.sh",
-      "sudo /tmp/vprofiledbdeploy.sh"
+      "sudo chmod 777 /tmp/vprofiledbdeploy.sh",
+      "sudo /opt/vprofiledbdeploy.sh"
     ]
   }
 
