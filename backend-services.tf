@@ -26,7 +26,7 @@ resource "aws_db_instance" "vprofile-rds" {
   parameter_group_name = "default.mysql5.6"
   multi_az             = "false"
   publicly_accessible  = "false"
-  identifier = "vprofile-rds"
+  identifier           = "vprofile-rds"
   # Skipping snapshot is good for learning purpose to save money but for production use case we should make this flag as false
   skip_final_snapshot    = true
   db_subnet_group_name   = aws_db_subnet_group.vprofile-rds-subgrp.name
